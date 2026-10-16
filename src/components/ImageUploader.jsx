@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-// Replace with your actual n8n Webhook URL from Step 1
-const N8N_WEBHOOK_URL = 'https://automation.vkjj.net/webhook-test/14b151b2-4677-464e-86e2-a44cb013a1e9';
+// Use Vite dev proxy to avoid browser CORS issues during local development
+const N8N_WEBHOOK_URL = '/api/n8n-webhook';
 
 export default function ImageUploader() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -41,10 +41,19 @@ export default function ImageUploader() {
       });
 
       if (!response.ok) {
-        throw new Error(`Server returned status ${response.status}`);
+        const errorBody = await response.text();
+        throw new Error(`Server returned status ${response.status}${errorBody ? `: ${errorBody}` : ''}`);
       }
 
-      const data = await response.json();
+      const responseText = await response.text();
+      const contentType = response.headers.get('content-type') || '';
+
+      // n8n may return either JSON or plain text depending on workflow configuration.
+      const data = contentType.includes('application/json')
+        ? JSON.parse(responseText)
+        : responseText;
+
+      console.log('response data: ', data);
       setResult(data);
     } catch (err) {
       console.error('Upload error:', err);
@@ -97,9 +106,9 @@ export default function ImageUploader() {
 
       {result && (
         <div style={{ marginTop: '20px', backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '4px' }}>
-          <h4>Workflow Response:</h4>
+          {/* <h4>Workflow Response:</h4> */}
           <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-            {JSON.stringify(result, null, 2)}
+            {result}
           </pre>
         </div>
       )}
