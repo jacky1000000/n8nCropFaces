@@ -85,7 +85,7 @@ export default function ImageUploader() {
       <p>Select an image to identify people in it. The image will be sent to the n8n workflow for processing.</p>
 
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ marginTop: '12px', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
           <input 
             type="email" 
             placeholder="Enter your email"
