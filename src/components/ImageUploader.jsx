@@ -20,6 +20,9 @@ export default function ImageUploader() {
       setPreview(URL.createObjectURL(file));
       setResult(null);
       setError(null);
+    } else {
+      setSelectedFile(null);
+      setPreview(null);
     }
   };
 
@@ -37,7 +40,25 @@ export default function ImageUploader() {
   // Send image binary to n8n Webhook
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedFile) return;
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail && !selectedFile) {
+      setError('Please enter your email and select an image before uploading.');
+      setResult(null);
+      return;
+    }
+
+    if (!trimmedEmail) {
+      setError('Please enter your email before uploading.');
+      setResult(null);
+      return;
+    }
+
+    if (!selectedFile) {
+      setError('Please select an image before uploading.');
+      setResult(null);
+      return;
+    }
 
     setLoading(true);
     setError(null);
@@ -45,7 +66,7 @@ export default function ImageUploader() {
     const formData = new FormData();
     // 'data' matches the binary property expected by n8n downstream nodes
     formData.append('data', selectedFile);
-    formData.append('email', email.trim());
+    formData.append('email', trimmedEmail);
     console.log('Sending file to n8n Webhook:', selectedFile);
 
     try {
@@ -86,17 +107,24 @@ export default function ImageUploader() {
 
       <form onSubmit={handleSubmit}>
         <div style={{ marginTop: '12px', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '85%', textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '6px', fontWeight: 600 }}>
+              Email <span style={{ color: '#dc2626' }}>*</span>
+            </label>
           <input 
             type="email" 
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: '85%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px' }}
+            style={{ width: '100%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px' }}
           />
+          </div>
         </div>
 
         <div style={{ marginBottom: '15px' }}>
+          <label style={{ display: 'block', marginBottom: '6px', fontWeight: 600 }}>
+            Image <span style={{ color: '#dc2626' }}>*</span>
+          </label>
           <input 
             ref={fileInputRef}
             type="file" 
@@ -118,7 +146,7 @@ export default function ImageUploader() {
         <div style={{ display: 'flex', gap: '10px' }}>
           <button 
             type="submit" 
-            disabled={!selectedFile || !email.trim() || loading}
+            disabled={loading}
             style={{ flex: 1, padding: '10px', backgroundColor: loading ? '#ccc' : '#0070f3', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
           >
             {loading ? 'Processing...' : 'Upload & Identify'}
