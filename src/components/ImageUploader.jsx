@@ -78,7 +78,7 @@ export default function ImageUploader() {
   };
 
   return (
-    <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: '1px solid #e0e0e0', backgroundColor: '#06fc12', borderRadius: '8px' }}>
+    <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: 'none', backgroundColor: '#06fc12', borderRadius: '8px' }}>
       <h2>Identify People from Image</h2>
 
       {/* Description */}
