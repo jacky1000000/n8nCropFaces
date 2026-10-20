@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 // Use Vite dev proxy to avoid browser CORS issues during local development
 const N8N_WEBHOOK_URL = '/api/n8n-webhook';
 
 export default function ImageUploader() {
+  const fileInputRef = useRef(null);
   const [email, setEmail] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -19,6 +20,17 @@ export default function ImageUploader() {
       setPreview(URL.createObjectURL(file));
       setResult(null);
       setError(null);
+    }
+  };
+
+  const handleReset = () => {
+    setEmail('');
+    setSelectedFile(null);
+    setPreview(null);
+    setResult(null);
+    setError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -86,6 +98,7 @@ export default function ImageUploader() {
 
         <div style={{ marginBottom: '15px' }}>
           <input 
+            ref={fileInputRef}
             type="file" 
             accept="image/*" 
             onChange={handleFileChange} 
@@ -102,13 +115,24 @@ export default function ImageUploader() {
           </div>
         )}
 
-        <button 
-          type="submit" 
-          disabled={!selectedFile || !email.trim() || loading}
-          style={{ width: '100%', padding: '10px', backgroundColor: loading ? '#ccc' : '#0070f3', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-        >
-          {loading ? 'Processing...' : 'Upload & Identify'}
-        </button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button 
+            type="submit" 
+            disabled={!selectedFile || !email.trim() || loading}
+            style={{ flex: 1, padding: '10px', backgroundColor: loading ? '#ccc' : '#0070f3', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+          >
+            {loading ? 'Processing...' : 'Upload & Identify'}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleReset}
+            disabled={loading}
+            style={{ padding: '10px 14px', backgroundColor: '#f2f2f2', color: '#333', border: '1px solid #d0d0d0', borderRadius: '4px', cursor: 'pointer' }}
+          >
+            Reset
+          </button>
+        </div>
       </form>
 
       {error && (
