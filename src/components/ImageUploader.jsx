@@ -78,21 +78,21 @@ export default function ImageUploader() {
   };
 
   return (
-    <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: '1px solid #e0e0e0', borderRadius: '8px' }}>
+    <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: '1px solid #e0e0e0', backgroundColor: '#06fc12', borderRadius: '8px' }}>
       <h2>Identify People from Image</h2>
 
       {/* Description */}
       <p>Select an image to identify people in it. The image will be sent to the n8n workflow for processing.</p>
 
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '15px' }}>
+        <div style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
           <input 
             type="email" 
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ width: '100%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px' }}
+            style={{ width: '85%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px' }}
           />
         </div>
 
