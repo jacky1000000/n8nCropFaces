@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 const N8N_WEBHOOK_URL = '/api/n8n-webhook';
 
 export default function ImageUploader() {
+  const [email, setEmail] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,7 @@ export default function ImageUploader() {
     const formData = new FormData();
     // 'data' matches the binary property expected by n8n downstream nodes
     formData.append('data', selectedFile);
+    formData.append('email', email.trim());
     console.log('Sending file to n8n Webhook:', selectedFile);
 
     try {
@@ -73,6 +75,17 @@ export default function ImageUploader() {
       <form onSubmit={handleSubmit}>
         <div style={{ marginBottom: '15px' }}>
           <input 
+            type="email" 
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={{ width: '100%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px' }}
+          />
+        </div>
+
+        <div style={{ marginBottom: '15px' }}>
+          <input 
             type="file" 
             accept="image/*" 
             onChange={handleFileChange} 
@@ -91,7 +104,7 @@ export default function ImageUploader() {
 
         <button 
           type="submit" 
-          disabled={!selectedFile || loading}
+          disabled={!selectedFile || !email.trim() || loading}
           style={{ width: '100%', padding: '10px', backgroundColor: loading ? '#ccc' : '#0070f3', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
         >
           {loading ? 'Processing...' : 'Upload & Identify'}
