@@ -98,6 +98,25 @@ export default function ImageUploader() {
     }
   };
 
+  const renderTextWithLinks = (value) => {
+    const text = String(value ?? '');
+    const urlPattern = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlPattern);
+
+    return parts.map((part, index) => {
+      const isUrl = /^https?:\/\/[^\s]+$/i.test(part);
+      if (!isUrl) {
+        return <React.Fragment key={`text-${index}`}>{part}</React.Fragment>;
+      }
+
+      return (
+        <a key={`url-${index}`} href={part} target="_blank" rel="noopener noreferrer">
+          {part}
+        </a>
+      );
+    });
+  };
+
   return (
     <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: 'none', backgroundColor: '#06fc12', borderRadius: '8px' }}>
       <h2>Identify People from Image</h2>
@@ -173,7 +192,7 @@ export default function ImageUploader() {
         <div style={{ marginTop: '20px', backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '4px' }}>
           {/* <h4>Workflow Response:</h4> */}
           <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-            {result}
+            {renderTextWithLinks(typeof result === 'string' ? result : JSON.stringify(result, null, 2))}
           </pre>
         </div>
       )}
