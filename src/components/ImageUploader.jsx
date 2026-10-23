@@ -124,7 +124,7 @@ export default function ImageUploader() {
       <h2>Identify People from Image</h2>
 
       {/* Description */}
-      <p>Select an image to identify people in it. The image will be sent to the n8n workflow for processing.</p>
+      <p>Enter your email address. Then select an image to identify people in it. The image will be sent to the n8n workflow for processing, and cropped faces will be sent to you via email.</p>
 
       <form onSubmit={handleSubmit}>
         <div style={{ marginTop: '12px', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
