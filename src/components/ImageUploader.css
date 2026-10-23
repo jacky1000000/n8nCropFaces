@@ -1,0 +1,135 @@
+.uploader-card {
+  width: min(100% - 24px, 720px);
+  margin: 20px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  border: none;
+  background-color: #06fc12;
+  border-radius: 8px;
+}
+
+.uploader-logo-row {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.uploader-logo {
+  width: 120px;
+  max-width: 45vw;
+  height: auto;
+}
+
+.uploader-field-row {
+  margin-top: 12px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.uploader-field-wrap {
+  width: min(100%, 520px);
+  text-align: left;
+}
+
+.uploader-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.uploader-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.uploader-file-row {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.uploader-file-input {
+  width: 100%;
+}
+
+.preview-wrap {
+  margin-bottom: 15px;
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.uploader-action-row {
+  display: flex;
+  gap: 10px;
+}
+
+.uploader-action-row button {
+  min-height: 42px;
+}
+
+.result-panel {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.result-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.result-image-item {
+  display: inline-block;
+  width: calc(50% - 8px);
+  margin: 4px;
+  vertical-align: top;
+}
+
+.result-image {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .uploader-card {
+    width: calc(100% - 16px);
+    margin: 12px auto;
+    padding: 14px;
+  }
+
+  .uploader-action-row {
+    flex-direction: column;
+  }
+
+  .uploader-action-row button {
+    width: 100%;
+  }
+
+  .result-image-item {
+    width: calc(50% - 8px);
+  }
+}
+
+@media (max-width: 520px) {
+  .uploader-logo {
+    width: 96px;
+  }
+
+  .result-image-item {
+    width: 100%;
+    margin: 6px 0;
+  }
+}

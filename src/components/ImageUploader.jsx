@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import inspireLabLogo from '../../inspirelab.png';
+import './ImageUploader.css';
 
 // Use Vite dev proxy to avoid browser CORS issues during local development
 const N8N_WEBHOOK_URL = '/api/n8n-webhook';
@@ -123,19 +124,11 @@ export default function ImageUploader() {
 
       if (isImageUrl) {
         return (
-          <div
-            key={`img-${index}`}
-            style={{
-              display: 'inline-block',
-              width: 'calc(50% - 8px)',
-              margin: '4px',
-              verticalAlign: 'top',
-            }}
-          >
+          <div key={`img-${index}`} className="result-image-item">
             <img
               src={cleanedUrl}
               alt="Workflow result"
-              style={{ width: '100%', maxHeight: '320px', objectFit: 'contain', borderRadius: '4px' }}
+              className="result-image"
             />
             {trailingText}
           </div>
@@ -154,12 +147,12 @@ export default function ImageUploader() {
   };
 
   return (
-    <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: 'none', backgroundColor: '#06fc12', borderRadius: '8px' }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
+    <div className="uploader-card">
+      <div className="uploader-logo-row">
         <img
           src={inspireLabLogo}
           alt="InspireLab logo"
-          style={{ width: '120px', height: 'auto' }}
+          className="uploader-logo"
         />
       </div>
       <h2>Identify People from Image</h2>
@@ -168,9 +161,9 @@ export default function ImageUploader() {
       <p>Enter your email address. Then select an image to identify people in it. The image will be sent to the n8n workflow for processing, and cropped faces will be sent to you via email.</p>
 
       <form onSubmit={handleSubmit}>
-        <div style={{ marginTop: '12px', marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '85%', textAlign: 'left' }}>
-            <label style={{ display: 'block', marginBottom: '6px', fontWeight: 600 }}>
+        <div className="uploader-field-row">
+          <div className="uploader-field-wrap">
+            <label className="uploader-label">
               Email <span style={{ color: '#dc2626' }}>*</span>
             </label>
           <input 
@@ -179,16 +172,18 @@ export default function ImageUploader() {
             value={email}
             disabled={loading}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px', backgroundColor: loading ? '#f5f5f5' : '#fff', cursor: loading ? 'not-allowed' : 'text' }}
+            className="uploader-input"
+            style={{ backgroundColor: loading ? '#f5f5f5' : '#fff', cursor: loading ? 'not-allowed' : 'text' }}
           />
           </div>
         </div>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '6px', fontWeight: 600 }}>
+        <div className="uploader-file-row">
+          <label className="uploader-label">
             Image <span style={{ color: '#dc2626' }}>*</span>
           </label>
           <input 
+            className="uploader-file-input"
             ref={fileInputRef}
             type="file" 
             accept="image/*" 
@@ -198,11 +193,11 @@ export default function ImageUploader() {
         </div>
 
         {preview && (
-          <div style={{ marginBottom: '15px' }}>
+          <div className="preview-wrap">
             <img 
               src={preview} 
               alt="Preview" 
-              style={{ width: '100%', maxHeight: '250px', objectFit: 'contain', borderRadius: '4px' }} 
+              className="preview-image"
             />
           </div>
         )}
@@ -227,7 +222,7 @@ export default function ImageUploader() {
           </button>
         </div> */}
 
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div className="uploader-action-row">
           <button 
             type="submit" 
             disabled={loading}
@@ -254,9 +249,9 @@ export default function ImageUploader() {
       )}
 
       {result && (
-        <div style={{ marginTop: '20px', backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '4px' }}>
+        <div className="result-panel">
           {/* <h4>Workflow Response:</h4> */}
-          <div style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+          <div className="result-content">
             {renderTextWithLinks(typeof result === 'string' ? result : JSON.stringify(result, null, 2))}
           </div>
         </div>
