@@ -135,8 +135,9 @@ export default function ImageUploader() {
             type="email" 
             placeholder="Enter your email"
             value={email}
+            disabled={loading}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px' }}
+            style={{ width: '100%', padding: '10px', border: '1px solid #e0e0e0', borderRadius: '4px', backgroundColor: loading ? '#f5f5f5' : '#fff', cursor: loading ? 'not-allowed' : 'text' }}
           />
           </div>
         </div>
@@ -149,6 +150,7 @@ export default function ImageUploader() {
             ref={fileInputRef}
             type="file" 
             accept="image/*" 
+            disabled={loading} 
             onChange={handleFileChange} 
           />
         </div>
