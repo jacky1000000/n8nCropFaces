@@ -62,6 +62,7 @@ export default function ImageUploader() {
     }
 
     setLoading(true);
+    setResult(null);
     setError(null);
 
     const formData = new FormData();
