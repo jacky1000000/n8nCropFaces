@@ -123,7 +123,15 @@ export default function ImageUploader() {
 
       if (isImageUrl) {
         return (
-          <div key={`img-${index}`} style={{ marginTop: '8px', marginBottom: '8px' }}>
+          <div
+            key={`img-${index}`}
+            style={{
+              display: 'inline-block',
+              width: 'calc(50% - 8px)',
+              margin: '4px',
+              verticalAlign: 'top',
+            }}
+          >
             <img
               src={cleanedUrl}
               alt="Workflow result"
