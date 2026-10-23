@@ -163,7 +163,7 @@ export default function ImageUploader() {
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '10px' }}>
+        {/* <div style={{ display: 'flex', gap: '10px' }}>
           <button 
             type="button" 
             onClick={handleReset}
@@ -181,7 +181,7 @@ export default function ImageUploader() {
           >
             Reset Image
           </button>
-        </div>
+        </div> */}
 
         <div style={{ display: 'flex', gap: '10px' }}>
           <button 
