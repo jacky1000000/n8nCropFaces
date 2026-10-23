@@ -11,6 +11,7 @@ export default function ImageUploader() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const isEntryEnabled = Boolean(result) && !loading;
 
   // Handle image selection and local preview
   const handleFileChange = (e) => {
@@ -164,21 +165,41 @@ export default function ImageUploader() {
 
         <div style={{ display: 'flex', gap: '10px' }}>
           <button 
-            type="submit" 
-            disabled={loading}
-            style={{ flex: 1, padding: '10px', backgroundColor: loading ? '#ccc' : '#0070f3', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+            type="button" 
+            onClick={handleReset}
+            disabled={loading || isEntryEnabled}
+            style={{ padding: '10px 14px', backgroundColor: loading || isEntryEnabled ? '#e5e5e5' : '#f2f2f2', color: '#333', border: '1px solid #d0d0d0', borderRadius: '4px', cursor: loading || isEntryEnabled ? 'not-allowed' : 'pointer' }}
           >
-            {loading ? 'Processing...' : 'Upload & Identify'}
+            Reset Email
           </button>
 
           <button
             type="button"
             onClick={handleReset}
-            disabled={loading}
-            style={{ padding: '10px 14px', backgroundColor: '#f2f2f2', color: '#333', border: '1px solid #d0d0d0', borderRadius: '4px', cursor: 'pointer' }}
+            disabled={loading || isEntryEnabled}
+            style={{ padding: '10px 14px', backgroundColor: loading || isEntryEnabled ? '#e5e5e5' : '#f2f2f2', color: '#333', border: '1px solid #d0d0d0', borderRadius: '4px', cursor: loading || isEntryEnabled ? 'not-allowed' : 'pointer' }}
           >
-            Reset
+            Reset Image
           </button>
+        </div>
+
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{ flex: 1, padding: '10px', backgroundColor: loading ? '#ccc' : '#0070f3', color: '#fff', border: 'none', borderRadius: '4px', cursor: loading ? 'not-allowed' : 'pointer' }}
+          >
+            {loading ? 'Processing...' : 'Upload & Identify'}
+          </button>
+
+          {/* <button
+            type="button"
+            onClick={handleReset}
+            disabled={!isEntryEnabled}
+            style={{ padding: '10px 14px', backgroundColor: isEntryEnabled ? '#f2f2f2' : '#e5e5e5', color: '#333', border: '1px solid #d0d0d0', borderRadius: '4px', cursor: isEntryEnabled ? 'pointer' : 'not-allowed' }}
+          >
+            Retry
+          </button> */}
         </div>
       </form>
 
