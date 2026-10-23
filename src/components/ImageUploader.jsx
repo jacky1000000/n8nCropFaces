@@ -105,17 +105,42 @@ export default function ImageUploader() {
     const text = String(value ?? '');
     const urlPattern = /(https?:\/\/[^\s]+)/g;
     const parts = text.split(urlPattern);
+    // console.log('Parts after splitting by URL pattern:', parts);
+    const imagePattern = /\.(png|jpe?g|gif|webp|bmp|svg)(\?.*)?(#.*)?$/i;
 
     return parts.map((part, index) => {
-      const isUrl = /^https?:\/\/[^\s]+$/i.test(part);
+      const cleanedUrl = part.replace(/[\],)\}."']+$/g, '');
+      console.log('Cleaned URL:', cleanedUrl);
+      const trailingText = part.slice(cleanedUrl.length);
+      console.log('Trailing text:', trailingText);
+      const isUrl = /^https?:\/\/[^\s]+$/i.test(cleanedUrl);
+
       if (!isUrl) {
         return <React.Fragment key={`text-${index}`}>{part}</React.Fragment>;
       }
 
+      const isImageUrl = imagePattern.test(cleanedUrl);
+
+      if (isImageUrl) {
+        return (
+          <div key={`img-${index}`} style={{ marginTop: '8px', marginBottom: '8px' }}>
+            <img
+              src={cleanedUrl}
+              alt="Workflow result"
+              style={{ width: '100%', maxHeight: '320px', objectFit: 'contain', borderRadius: '4px' }}
+            />
+            {trailingText}
+          </div>
+        );
+      }
+
       return (
-        <a key={`url-${index}`} href={part} target="_blank" rel="noopener noreferrer">
-          {part}
-        </a>
+        <React.Fragment key={`url-${index}`}>
+          <a href={cleanedUrl} target="_blank" rel="noopener noreferrer">
+            {cleanedUrl}
+          </a>
+          {trailingText}
+        </React.Fragment>
       );
     });
   };
@@ -223,9 +248,9 @@ export default function ImageUploader() {
       {result && (
         <div style={{ marginTop: '20px', backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '4px' }}>
           {/* <h4>Workflow Response:</h4> */}
-          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+          <div style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
             {renderTextWithLinks(typeof result === 'string' ? result : JSON.stringify(result, null, 2))}
-          </pre>
+          </div>
         </div>
       )}
     </div>
