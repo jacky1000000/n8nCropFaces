@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import inspireLabLogo from '../../inspirelab.png';
 
 // Use Vite dev proxy to avoid browser CORS issues during local development
 const N8N_WEBHOOK_URL = '/api/n8n-webhook';
@@ -121,6 +122,13 @@ export default function ImageUploader() {
 
   return (
     <div style={{ maxWidth: '420px', margin: '20px auto', padding: '20px', border: 'none', backgroundColor: '#06fc12', borderRadius: '8px' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
+        <img
+          src={inspireLabLogo}
+          alt="InspireLab logo"
+          style={{ width: '120px', height: 'auto' }}
+        />
+      </div>
       <h2>Identify People from Image</h2>
 
       {/* Description */}
